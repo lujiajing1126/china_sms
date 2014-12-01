@@ -8,36 +8,42 @@ end
 module ChinaSMS
   extend self
 
-  attr_reader :username, :password
-
+  attr_reader :accounts
+  SCOPE_TYPES = [:international,:global,:domestic]
+  DEFAULT_SCOPE = :domestic
   def use(service, options)
-    @service = ChinaSMS::Service.const_get("#{service.to_s.capitalize}")
-    @service.const_set("URL", options[:base_uri]) if options[:base_uri]
-    @username = options[:username]
-    @password = options[:password]
+    @accounts = {} if @accounts.nil?
+    @accounts[service] = {:username => options[:username],:password => options[:password]}
+    scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
+    @services = {} if @services.nil?
+    @services[scope] = ChinaSMS::Service.const_get("#{service.to_s.capitalize}")
+    @services[scope].const_set("URL", options[:base_uri]) if options[:base_uri]
   end
 
   def to(receiver, content, options = {})
-    options = default_options.merge options
-    @service.to receiver, content, options if @service
+    scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
+    return if @services.nil?
+    service = @services[scope]
+    options = default_options(service.name).merge options
+    service.to receiver, content, options if service
   end
 
   def get(options = {})
-    options = default_options.merge options
-    @service.get options if @service
+    scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
+    return if @services.nil?
+    service = @services[scope]
+    options = default_options(service.name).merge options
+    @service[options[:scope]].get options if service
   end
 
   def clear
-    @service = @username = @password = nil
+    @services = @accounts = nil
   end
 
   private
 
-  def default_options
-    {
-      username:  @username,
-      password:  @password
-    }
+  def default_options(service)
+    @accounts[service.split("::").last.downcase.to_sym]
   end
 
 end
