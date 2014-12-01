@@ -36,7 +36,13 @@ module ChinaSMS
 
       def result body
         begin
-          JSON.parse body
+          resp = JSON.parse body
+	  if resp['code'] == 0
+	    resp['success'] == 1
+	    resp
+	  else
+	    resp
+	  end
         rescue => e
           {
             code: 502,
