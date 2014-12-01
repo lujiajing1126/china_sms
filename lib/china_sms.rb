@@ -24,6 +24,7 @@ module ChinaSMS
     scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
     return if @services.nil?
     service = @services[scope]
+    return if service.nil?
     options = default_options(service.name).merge options
     service.to receiver, content, options if service
   end
@@ -32,6 +33,7 @@ module ChinaSMS
     scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
     return if @services.nil?
     service = @services[scope]
+    return if service.nil?
     options = default_options(service.name).merge options
     @service[options[:scope]].get options if service
   end
