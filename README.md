@@ -12,6 +12,7 @@
 * [畅友网络](http://www.chanyoo.cn/) 群发短信需要半小时左右的时间审核，星期五等繁忙时段会有几个小时的延时，不适合发送注册校验码等实时短信，单次最多发送500个号码
 * [亿美软通](http://www.emay.cn/)
 * [螺丝帽](http://luosimao.com/)
+* [ISMS360](http://www.isms360.com)
 
 非常感谢 [推立方](http://tui3.com/) 为 [19屋活动平台](http://19wu.com) 提供短信赞助。
 
@@ -36,6 +37,12 @@
 ChinaSMS.use :tui3, username: 'YOUR_USERNAME', password: 'YOUR_PASSWORD'
 ChinaSMS.to '13912345678', '[Test]China SMS gem has been released.'
 
+# 新增特性,支持国际国内短信分离,SCOPE
+# SCOPE_TYPE: [:domestic,:international,:global],默认值:domestic,兼容0.1.x
+ChinaSMS.use :isms360, username: 'balabal',password:'API_KEY',scope: :international
+# 发送短信支持增加新的参数，这里手机号码的判断需要自己做，不加scope
+# 如果是国际短信
+ChinaSMS.to '1XXXXXXXXX', 'nihao,woshi xiaohuihui',scope: :international
 
 # :yunpian
 #   如果content(第二个参数) 是字符串
