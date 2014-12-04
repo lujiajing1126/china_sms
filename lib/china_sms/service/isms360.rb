@@ -18,7 +18,7 @@ module ChinaSMS
 	  content.encode!(Encoding::ASCII)
 	  coding = 0
 	end
-        res = Net::HTTP.post_form(URI.parse("#{URL}/MT3.ashx"), src: options[:username], pwd: options[:password], dest: phones, msg: content, codec: coding )
+        res = Net::HTTP.post_form(URI.parse("#{URL}/MT3.ashx"), src: options[:username], pwd: options[:password], dest: phones, msg: content.unpack("H*").first, codec: coding )
         result res.body
       end
 
