@@ -12,11 +12,7 @@ module ChinaSMS
       end
 
       def result(body)
-        code = body.match(/[\-]?[\d]{1,}/)[1]
-        {
-          success: (code.to_i >= 0),
-          code: code
-        }
+        body
       end
 
     end
