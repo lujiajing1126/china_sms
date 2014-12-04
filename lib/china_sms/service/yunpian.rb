@@ -38,7 +38,7 @@ module ChinaSMS
         begin
           resp = JSON.parse body
 	  if resp['code'] == 0
-	    resp['success'] = 1
+	    resp[:success] = 1
 	    resp
 	  else
 	    resp
