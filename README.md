@@ -1,6 +1,6 @@
 # ChinaSMS 短信平台 Ruby 接口
 
-[![Build Status](https://travis-ci.org/saberma/china_sms.png?branch=master)](https://travis-ci.org/saberma/china_sms)
+[![Build Status](https://travis-ci.org/lujiajing1126/global_sms.svg?branch=master)](https://travis-ci.org/lujiajing1126/global_sms)
 
 ## 支持以下短信平台
 
