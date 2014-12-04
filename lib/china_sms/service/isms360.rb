@@ -3,7 +3,7 @@ module ChinaSMS
   module Service
     module Isms360
       extend self
-      URL = "http:// 210.51.190.233:8085/mt"
+      URL = "http://210.51.190.233:8085/mt"
 
       def to(phone, content, options)
         phones = Array(phone).join(',')
