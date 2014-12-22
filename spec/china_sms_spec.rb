@@ -10,12 +10,13 @@ describe "ChinaSMS" do
   let(:content) { '活动通知：深圳 Rubyist 活动时间变更到明天下午 7:00，请留意。' }
 
   context 'with service' do
-    before { ChinaSMS.use service, username: username, password: password }
-
+    before { ChinaSMS.use service, username: username, password: password ,scope: :global
+	     ChinaSMS.use service, username: username, password: password,scope: :domestic
+    }
     describe "#use" do
       subject (:chinasms){ ChinaSMS }
       it "username is saberma" do
-	expect(chinasms.accounts[:tui3][:username]).to eq "saberma"
+	expect(chinasms.accounts["tui3_global".to_sym][:username]).to eq "saberma"
       end
     end
 

@@ -13,8 +13,8 @@ module ChinaSMS
   DEFAULT_SCOPE = :domestic
   def use(service, options)
     @accounts = {} if @accounts.nil?
-    @accounts[service] = {:username => options[:username],:password => options[:password]}
     scope = SCOPE_TYPES.include?(options[:scope]) ? options[:scope] : DEFAULT_SCOPE
+    @accounts["#{service.to_s}_#{scope}".to_sym] = {:username => options[:username],:password => options[:password]}
     @services = {} if @services.nil?
     @services[scope] = ChinaSMS::Service.const_get("#{service.to_s.capitalize}")
     @services[scope].const_set("URL", options[:base_uri]) if options[:base_uri]
@@ -25,7 +25,7 @@ module ChinaSMS
     return if @services.nil?
     service = @services[scope]
     return if service.nil?
-    options = default_options(service.name).merge options
+    options = default_options(service.name,scope).merge options
     service.to receiver, content, options if service
   end
 
@@ -34,7 +34,7 @@ module ChinaSMS
     return if @services.nil?
     service = @services[scope]
     return if service.nil?
-    options = default_options(service.name).merge options
+    options = default_options(service.name,scope).merge options
     @service[options[:scope]].get options if service
   end
 
@@ -44,8 +44,8 @@ module ChinaSMS
 
   private
 
-  def default_options(service)
-    @accounts[service.split("::").last.downcase.to_sym]
+  def default_options(service,scope)
+    @accounts["#{service.split("::").last.downcase}_#{scope}".to_sym]
   end
 
 end
