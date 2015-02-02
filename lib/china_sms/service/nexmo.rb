@@ -6,7 +6,7 @@ module ChinaSMS
       extend self
 
       def to(phone, content, options)
-        nexmo = Nexmo::Client.new(key: options[:username], secret: options[:password])
+        nexmo = ::Nexmo::Client.new(key: options[:username], secret: options[:password])
         begin
           result = nexmo.send_message(from: 'Whosv', to: phone, text: content)
           {success: result.to_i}
