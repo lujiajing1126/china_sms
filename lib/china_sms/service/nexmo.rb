@@ -5,10 +5,17 @@ module ChinaSMS
     module Nexmo
       extend self
 
-      def to(phone, content, options)
+      def to(phone, code, options)
+        prefix = options[:prefix].to_i || 86
         nexmo = ::Nexmo::Client.new(key: options[:username], secret: options[:password])
         begin
-          result = nexmo.send_message(from: 'Whosv', to: phone, text: content)
+          case prefix
+            when 1
+              result = nexmo.send_2fa_message(to: phone, pin: code)
+            else
+              content = "Your Whosv code is #{code}."
+              result = nexmo.send_message(from: 'Whosv', to: phone, text: content)
+          end
           {success: result.to_i}
         rescue
           {error: 0}
