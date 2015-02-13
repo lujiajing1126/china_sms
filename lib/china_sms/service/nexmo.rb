@@ -17,7 +17,7 @@ module ChinaSMS
               result = nexmo.send_message(from: 'Whosv', to: phone, text: content)
           end
           # result is_a? Hash == true
-          {success: result["messages"]["status"].to_i}
+          {success: result["messages"][0]["status"].to_i}
         rescue Exception => ex
           puts ex.message
           puts ex.backtrace.inspect
