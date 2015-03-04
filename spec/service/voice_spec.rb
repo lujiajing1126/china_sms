@@ -6,7 +6,6 @@ describe "Voice" do
   describe "voice#to" do
     let(:username) { 'api' }
     let(:password) { 'key-password' }
-    let(:url) { "http://voice-api.luosimao.com/v1/verify.json" }
     let(:content) { '1234' }
     subject { ChinaSMS::Service::Voice.to phone, content, username: username, password: password }
 

@@ -12,7 +12,7 @@ module ChinaSMS
         post.set_form_data({mobile: phone, message: content})
 
         socket = Net::HTTP.new(url.host, url.port)
-        socket.use_ssl = true
+        #socket.use_ssl = true
         response = socket.start {|http| http.request(post) }
         result JSON.parse(response.body)
       end
