@@ -9,7 +9,7 @@ module ChinaSMS
 				url = URI.parse("http://voice-api.luosimao.com/v1/verify.json")
         post = Net::HTTP::Post.new(url.path)
         post.basic_auth(options[:username], options[:password])
-        post.set_form_data({mobile: phone, message: content})
+        post.set_form_data({mobile: phone, code: content})
 
         socket = Net::HTTP.new(url.host, url.port)
         #socket.use_ssl = true
