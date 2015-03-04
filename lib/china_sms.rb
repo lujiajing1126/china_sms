@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "china_sms/version"
 require 'net/http'
+require 'pry'
 Dir.glob("#{File.expand_path(File.dirname(__FILE__))}/china_sms/service/*.rb").sort.each do |f|
   require f.match(/(china_sms\/service\/.*)\.rb$/)[0]
 end
@@ -9,7 +10,7 @@ module ChinaSMS
   extend self
 
   attr_reader :accounts
-  SCOPE_TYPES = [:international,:global,:domestic]
+  SCOPE_TYPES = [:international,:global,:domestic, :voice]
   DEFAULT_SCOPE = :domestic
   def use(service, options)
     @accounts = {} if @accounts.nil?
