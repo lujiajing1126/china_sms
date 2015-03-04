@@ -9,7 +9,7 @@ module ChinaSMS
   extend self
 
   attr_reader :accounts
-  SCOPE_TYPES = [:international,:global,:domestic]
+  SCOPE_TYPES = [:international,:global,:domestic, :voice]
   DEFAULT_SCOPE = :domestic
   def use(service, options)
     @accounts = {} if @accounts.nil?
